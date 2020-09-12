@@ -31,7 +31,7 @@ Query logs from lambda functions tagged with `team:ecommerce` that has the word 
 
 Example 2:
 Query logs from lambda functions by cloudformation stack name tag using the guided menu
-![Demo](./images/demo-tag.gif)
+![Demo](https://raw.githubusercontent.com/mhlabs/cwlogs-cli/master/demo/demo-tag.gif)
 
 
 ## By log group prefix
@@ -55,7 +55,7 @@ Options:
 Example:
 Query all RDS clusters' error logs
 `cwlogs prefix /aws/rds/cluster --pattern \/error$`
-![Demo](./images/demo-prefix.gif)
+![Demo](https://raw.githubusercontent.com/mhlabs/cwlogs-cli/master/demo/demo-prefix.gif)
 
 ## Known limitations
 CloudWatch Logs Insights currently only allows up to 20 log groups in one query. The total numbe rof characters (query + log groups) may bot exceed 10000 characters.

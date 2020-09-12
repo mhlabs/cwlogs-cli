@@ -5,27 +5,32 @@ const open = require("open");
 const package = require("./package.json");
 require("@mhlabs/aws-sdk-sso");
 const tagCommand = require("./src/TagCommand");
-const regexCommand = require("./src/PrefixCommand");
+const prefixCommand = require("./src/PrefixCommand");
 
 AWS.config.credentialProvider.providers.unshift(
   new AWS.SingleSignOnCredentials()
 );
 
-program.version(package.version, "-v, --vers", "output the current version");
+program.version(package.version, "-v, --version", "output the current version");
 
 program
-  .command("tag")
-  .alias("t")
+  .command("insights")
+  .alias("i")
   .option(
     "-t, --tag [tag]",
-    "Tag to filter on. Format: tagName:value1,value2. Optional. If omitted you will get prompted by available tags"
+    "Tag to filter on. Format: tagName:value1,value2. Optional. If omitted you will get prompted by available tags",
+    false
   )
   .option(
-    "-p, --pattern [pattern]",
+    "-p, --prefix [prefix]",
+    "Log group prefix. I.e /aws/lambda/. The more granular this is specified, the faster the command will run"
+  )
+  .option(
+    "--pattern [pattern]",
     "Regex pattern used to filter the log group names"
   )
   .option(
-    "-r, --region [region]",
+    "--region [region]",
     "AWS region. Defaults to environment variable AWS_REGION"
   )
   .option(
@@ -33,38 +38,25 @@ program
     "AWS profile. Defaults to environment variable AWS_PROFILE"
   )
   .description(
-    "Opens a CloudWatch Logs console with multiple Lambda log groups matching a tag"
+    "Opens a CloudWatch Logs console with multiple log groups matching a tag or prefix"
   )
   .action(async (cmd) => {
     AWS.config.region = cmd.region || process.env.AWS_REGION;
     process.env.AWS_PROFILE = cmd.profile || process.env.AWS_PROFILE;
+    const args = cmd.parent.args;
+    let url;
+    if (args.includes("--tag") || args.includes("-t")) {
+      url = await tagCommand.generateUrl(cmd.tag, cmd.pattern);
+    }
+    if (args.includes("--prefix") || args.includes("-p")) {
+      url = await prefixCommand.generateUrl(cmd.prefix, cmd.pattern);
+    }
+    if (url) {
+      open(url);
+    } else {
+      program.help();
+    }
 
-    const url = await tagCommand.generateUrl(cmd.tag, cmd.pattern);
-    open(url);
-  });
-program
-  .command("prefix [prefix]")
-  .alias("p [prefix]")
-  .option(
-    "-p, --pattern [pattern]",
-    "Regex pattern used to filter the log group names"
-  )
-  .option(
-    "-r, --region [region]",
-    "AWS region. Defaults to environment variable AWS_REGION"
-  )
-  .option(
-    "--profile [profile]",
-    "AWS profile. Defaults to environment variable AWS_PROFILE"
-  )
-  .description(
-    "Opens a CloudWatch Logs console with multiple log groups matching a prefix"
-  )
-  .action(async (prefix, cmd) => {
-    AWS.config.region = cmd.region || process.env.AWS_REGION;
-    process.env.AWS_PROFILE = cmd.profile || process.env.AWS_PROFILE;
-    const url = await regexCommand.generateUrl(prefix, cmd.pattern);
-    open(url);
   });
 
 program.parse(process.argv);

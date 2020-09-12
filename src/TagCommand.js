@@ -13,11 +13,11 @@ async function generateUrl(tag, pattern) {
   let tagKey;
   let tagValues;
 
-  if (tag) {
+  if (typeof tag === "string" || tag instanceof String) {
     const split = tag.split(":");
     tagKey = split[0].trim();
     tagValue = split[1].split(",").map((p) => p.trim());
-  } else {
+  } else if (tag === true) {
     spinner.start();
     const tagKeys = await getAllTagKeys(tags);
     spinner.stop();
@@ -28,10 +28,10 @@ async function generateUrl(tag, pattern) {
         name: "value",
         type: "list",
         choices: tagKeys.sort((a, b) => {
-            if (a.toLowerCase() > b.toLowerCase()) return 1;
-            if (a.toLowerCase() < b.toLowerCase()) return -1;
-            return 0;
-          }),
+          if (a.toLowerCase() > b.toLowerCase()) return 1;
+          if (a.toLowerCase() < b.toLowerCase()) return -1;
+          return 0;
+        }),
       })
     ).value;
     spinner.start();

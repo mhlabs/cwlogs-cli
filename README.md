@@ -1,5 +1,8 @@
 # CWLogs CLI
 
+## Inatallation
+`npm i -g @mhlabs/cwlogs-cli`
+
 CloudWatch Insights Logs is a great way to search your CloudWatch logs. Often you want to search across many log groups to, for example, tracing a correlation id across multiple services. CloudWatch Logs Insights lets you search across up to 20 log groups in one query, but adding log groups from the dropdown is a bit cumbersome.
 
 This tool lets you generate and open a CloudWatch Logs Insights URL with your desired log groups pre-added. 

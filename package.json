@@ -1,0 +1,42 @@
+{
+  "name": "@mhlabs/cwlogs-cli",
+  "version": "1.0.0",
+  "description": "CLI tool to quickly set up cross log group search in CloudWatch Logs Insights based on prefix, tags and/or RegEx pattern",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "aws",
+    "sam",
+    "draw.io",
+    "cloudformation"
+  ],
+  "author": "mhlabs",
+  "license": "ISC",
+  "dependencies": {
+    "@mhlabs/aws-sdk-sso": "0.0.11",
+    "aws-sdk": "^2.751.0",
+    "cli-spinner": "^0.2.10",
+    "commander": "^6.1.0",
+    "inquirer": "^7.3.3",
+    "open": "^7.2.1"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
+  "bin": {
+    "cwlogs": "index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhlabs/cwlogs-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mhlabs/cwlogs-cli/issues"
+  },
+  "homepage": "https://github.com/mhlabs/cwlogs-cli#readme"
+}

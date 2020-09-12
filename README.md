@@ -2,7 +2,7 @@
 
 CloudWatch Insights Logs is a great way to search your CloudWatch logs. Often you want to search across many log groups to, for example, tracing a correlation id across multiple services. CloudWatch Logs Insights lets you search across up to 20 log groups in one query, but adding log groups from the dropdown is a bit cumbersome.
 
-This tool lets you generate a CloudWatch Logs Insights URL with your desired log groups pre-added. 
+This tool lets you generate and open a CloudWatch Logs Insights URL with your desired log groups pre-added. 
 
 You can specify which log groups you want to include as follows:
 
@@ -21,12 +21,13 @@ Options:
   -t, --tag [tag]          Tag to filter on. Format: tagName:value1,value2. Optional. If omitted you will get prompted by available tags
   -p, --pattern [pattern]  Regex pattern used to filter the log group names
   -r, --region [region]    AWS region. Defaults to environment variable AWS_REGION
+  --profile [profile]      AWS profile. Defaults to environment variable AWS_PROFILE
   -h, --help               display help for command
 ```
 
 Example 1:
 Query logs from lambda functions tagged with `team:ecommerce` that has the word `Api` in its name
-`cwlogs tag -t team:ecom -p Api`
+`cwlogs tag -t team:ecommerce -p Api`
 
 Example 2:
 Query logs from lambda functions by cloudformation stack name tag using the guided menu

@@ -7,6 +7,8 @@ require("@mhlabs/aws-sdk-sso");
 const tagCommand = require("./src/TagCommand");
 const prefixCommand = require("./src/PrefixCommand");
 
+process.env.AWS_SDK_LOAD_CONFIG = 1;
+
 AWS.config.credentialProvider.providers.unshift(
   new AWS.SingleSignOnCredentials()
 );
